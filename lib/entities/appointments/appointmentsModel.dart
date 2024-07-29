@@ -1,26 +1,28 @@
-class Appointmentsmodel{
+import 'package:appointments/entities/clients/Model.dart';
+import 'package:objectbox/objectbox.dart';
+
+@Entity()
+class Appointmentsmodel {
+  @Id()
   int id;
   DateTime date;
-  int clientId;
-  String observation;
-  String treatment;
-  String diagnosis;
-
+  final client = ToOne<ClientModel>();
+  String? observation;
+  String? treatment;
+  String? diagnosis;
 
   Appointmentsmodel({
-    required this.id,
+    this.id = 0,
     required this.date,
-    required this.clientId,
-    required this.observation,
-    required this.treatment,
-    required this.diagnosis,
+     this.observation,
+     this.treatment,
+     this.diagnosis,
   });
 
   factory Appointmentsmodel.fromJson(Map<String, dynamic> json) {
     return Appointmentsmodel(
       id: json['id'] as int,
       date: DateTime.parse(json['date']),
-      clientId: json['clientId'] as int,
       observation: json['observation'] as String,
       treatment: json['treatment'] as String,
       diagnosis: json['diagnosis'] as String,
@@ -31,12 +33,9 @@ class Appointmentsmodel{
     return {
       'id': id,
       'date': date,
-      'clientId': clientId,
       'observation': observation,
       'treatment': treatment,
       'diagnosis': diagnosis,
     };
   }
-
 }
-

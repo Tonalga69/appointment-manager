@@ -10,6 +10,7 @@ class AddClientPage extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
+  final TextEditingController noteBookNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +86,29 @@ class AddClientPage extends StatelessWidget {
                       ),
                       hintText: 'Ingrese la edad del cliente'),
                 ),
+                const Padding(padding: EdgeInsets.all(8.0)),
+                TextFormField(
+                  controller: noteBookNumberController,
+                  style: const TextStyle(color: AppColors.gunMetal),
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  decoration: InputDecoration(
+                      suffixText: 'Cuaderno',
+                      labelStyle: const TextStyle(color: AppColors.gunMetal),
+                      labelText: 'No. cuaderno',
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: AppColors.gunMetal),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: AppColors.blue),
+                      ),
+                      hintText: 'cuaderno'),
+                ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -95,9 +119,11 @@ class AddClientPage extends StatelessWidget {
                   ),
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
+                      int? noteBookNumber = int.tryParse(noteBookNumberController.text);
                       ClientsController.to.addClient(ClientModel(
                           id: 0,
                           name: nameController.text.trim(),
+                          noteBookNumber: noteBookNumber,
                           age: int.parse(ageController.text)));
                     }
                   },

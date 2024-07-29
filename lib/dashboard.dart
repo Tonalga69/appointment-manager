@@ -1,4 +1,6 @@
+import 'package:appointments/entities/appointments/controllers/appointments_controller.dart';
 import 'package:appointments/entities/clients/controllers/ClientsController.dart';
+import 'package:appointments/pages/appointments_page/appointment_pager.dart';
 import 'package:appointments/pages/clients_page/clients_pager.dart';
 import 'package:appointments/utils/colors.dart';
 import 'package:appointments/utils/routes.dart';
@@ -10,6 +12,7 @@ import 'package:get/get.dart';
 class DashBoardPage extends StatelessWidget {
    DashBoardPage({super.key});
   final ClientsController clientController = Get.put(ClientsController());
+  final AppointmentsController appointmentsController = Get.put(AppointmentsController());
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,7 @@ class DashBoardPage extends StatelessWidget {
       body: PageView(
         children: const [
           ClientsPager(),
-
+          AppointmentPager()
         ],
       ),
     );

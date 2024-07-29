@@ -1,10 +1,11 @@
 import 'package:appointments/entities/clients/Model.dart';
-import 'package:appointments/entities/clients/respositories/SqlClientRepository.dart';
+import 'package:appointments/entities/clients/respositories/clients_repository.dart';
 import 'package:get/get.dart';
 
 class ClientsController extends GetxController {
   final clientsList = <ClientModel>[].obs;
   var selectedClient = Rxn<ClientModel>(null);
+  final nameSearch = ''.obs;
   static ClientsController get to {
     try {
       return Get.find<ClientsController>();
@@ -13,7 +14,17 @@ class ClientsController extends GetxController {
     }
   }
 
-  void getAllClients() async {
+  @override
+  void onInit() {
+    getAllClients();
+    super.onInit();
+  }
+
+  void getAllClients({String? name}) async {
+    if (name != null) {
+      clientsList.value =  ClientsRepository.to.getClientByName(name);
+      return;
+    }
     clientsList.value = await ClientsRepository.to.getAllClients();
   }
 
