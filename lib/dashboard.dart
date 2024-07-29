@@ -1,10 +1,15 @@
+import 'package:appointments/entities/clients/controllers/ClientsController.dart';
+import 'package:appointments/pages/clients_page/clients_pager.dart';
 import 'package:appointments/utils/colors.dart';
+import 'package:appointments/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class DashBoardPage extends StatelessWidget {
-  const DashBoardPage({super.key});
+   DashBoardPage({super.key});
+  final ClientsController clientController = Get.put(ClientsController());
 
   @override
   Widget build(BuildContext context) {
@@ -22,27 +27,27 @@ class DashBoardPage extends StatelessWidget {
         overlayColor: AppColors.gray,
         children: [
           SpeedDialChild(
-            child: Icon(FontAwesomeIcons.user),
+            child: const Icon(FontAwesomeIcons.user),
             label: 'Clientes',
             onTap: () {
-              Navigator.pushNamed(context, '/clients');
+             Get.toNamed(Routes.newClient);
             },
           ),
           SpeedDialChild(
-            child: Icon(FontAwesomeIcons.calendar),
+            child: const Icon(FontAwesomeIcons.calendar),
             label: 'Citas',
             onTap: () {
-              Navigator.pushNamed(context, '/appointments');
+              Get.toNamed(Routes.newAppointment);
             },
           ),
 
         ],
       ),
-      body: const Center(
-        child: Text(
-          'Clients Page',
-          style: TextStyle(fontSize: 24),
-        ),
+      body: PageView(
+        children: const [
+          ClientsPager(),
+
+        ],
       ),
     );
   }

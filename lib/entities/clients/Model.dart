@@ -17,9 +17,12 @@ class ClientModel {
       age: json['age'] as int,
     );
   }
-}
 
-class ClientTable{
-  static const String table = 'CREATE TABLE clients(id INTEGER AUTOINCREMENT PRIMARY KEY, name TEXT, age INTEGER);';
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'age': age,
+    };
+  }
 }
 

@@ -1,33 +1,25 @@
 import 'package:appointments/entities/clients/Model.dart';
-import 'package:appointments/entities/global_repositories/SqlnitializerRepository.dart';
 import 'package:get/get.dart';
 
-
-class SqlClientRepository extends GetxController {
-final db = Get.find<Sqlnitializerrepository>().db;
-
-  static SqlClientRepository get to {
+class ClientsRepository extends GetxController {
+  static ClientsRepository get to {
     try {
-      return Get.find<SqlClientRepository>();
+      return Get.find<ClientsRepository>();
     } catch (e) {
-      return Get.put(SqlClientRepository());
+      return Get.put(ClientsRepository());
     }
   }
 
   Future<List<ClientModel>> getAllClients() async {
     final clients = <ClientModel>[];
-    final result = await db.query("clients", limit: 50);
-    for (final row in result) {
-      clients.add(ClientModel(
-        id: row['id'] as int,
-        name: row['name'] as String,
-        age: row['age'] as int,
-      ));
-    }
     return clients;
   }
 
-  addClient(ClientModel client) async {}
-
-
+  Future<bool> addClient(ClientModel client) async {
+    try {
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

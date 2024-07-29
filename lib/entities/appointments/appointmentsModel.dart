@@ -40,6 +40,3 @@ class Appointmentsmodel{
 
 }
 
-class AppointmentsTable{
-  static const String table = 'CREATE TABLE appointments(id INTEGER PRIMARY AUTOINCREMENT KEY, date TEXT, clientId INTEGER, observation TEXT, treatment TEXT, diagnosis TEXT);';
-}
