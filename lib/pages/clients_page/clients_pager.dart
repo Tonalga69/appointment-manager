@@ -39,10 +39,7 @@ class ClientsPager extends GetView<ClientsController> {
                   itemCount: controller.clientsList.length,
                   itemBuilder: (context, index) {
                     final client = controller.clientsList[index];
-                    return InkWell(
-                      onTap: () {},
-                      child: ClientItem(client: client),
-                    );
+                    return ClientItem(client: client);
                   },
                 ),
               )),

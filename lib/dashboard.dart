@@ -17,7 +17,6 @@ class DashBoardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.blue,
         title: const Text('Manegador de citas',

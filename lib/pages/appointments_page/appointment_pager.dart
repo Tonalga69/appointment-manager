@@ -1,5 +1,5 @@
 import 'package:appointments/entities/appointments/controllers/appointments_controller.dart';
-import 'package:appointments/pages/widgets/appointments_item.dart';
+import 'package:appointments/pages/appointments_page/widgets/appointments_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

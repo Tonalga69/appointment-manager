@@ -1,11 +1,15 @@
+import 'package:appointments/entities/appointments/repositories/appointment_repository.dart';
 import 'package:appointments/entities/clients/Model.dart';
 import 'package:appointments/entities/clients/respositories/clients_repository.dart';
 import 'package:get/get.dart';
 
+import '../../appointments/appointmentsModel.dart';
+
 class ClientsController extends GetxController {
   final clientsList = <ClientModel>[].obs;
-  var selectedClient = Rxn<ClientModel>(null);
+  final selectedClient = Rxn<ClientModel>(null);
   final nameSearch = ''.obs;
+
   static ClientsController get to {
     try {
       return Get.find<ClientsController>();
@@ -20,9 +24,13 @@ class ClientsController extends GetxController {
     super.onInit();
   }
 
+  Future<List<Appointmentsmodel>> getAllAppointmentsFromSelectedClient() async {
+    return await AppointmentRepository.to.getAllAppointments();
+  }
+
   void getAllClients({String? name}) async {
     if (name != null) {
-      clientsList.value =  ClientsRepository.to.getClientByName(name);
+      clientsList.value = ClientsRepository.to.getClientByName(name);
       return;
     }
     clientsList.value = await ClientsRepository.to.getAllClients();
@@ -39,5 +47,16 @@ class ClientsController extends GetxController {
     Get.snackbar('Exito', 'Cliente agregado correctamente');
   }
 
-
+  void updateClient(ClientModel client) async {
+    final res = await ClientsRepository.to.updateClient(client);
+    if (res == null) {
+      Get.snackbar('Error', 'No se pudo actualizar el cliente');
+      return;
+    }
+    final index = clientsList.indexWhere((element) => element.id == res.id);
+    clientsList[index] = res;
+    selectedClient.value = res;
+    Get.back();
+    Get.snackbar('Exito', 'Cliente actualizado correctamente');
+  }
 }

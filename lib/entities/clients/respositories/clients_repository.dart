@@ -37,4 +37,13 @@ class ClientsRepository extends GetxController {
   ClientModel? getClientById(int parse) {
     return store.box<ClientModel>().get(parse);
   }
+
+  Future<ClientModel?> updateClient(ClientModel client) async  {
+    try {
+      final res =await store.box<ClientModel>().putAndGetAsync(client, mode: PutMode.put);
+      return res;
+    } catch (e) {
+      return null;
+    }
+  }
 }

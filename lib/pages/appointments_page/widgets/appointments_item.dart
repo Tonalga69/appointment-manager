@@ -1,9 +1,10 @@
 
 
+import 'package:appointments/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
-import '../../entities/appointments/appointmentsModel.dart';
+import '../../../entities/appointments/appointmentsModel.dart';
 
 class AppointmentsItem extends StatelessWidget {
   const AppointmentsItem({super.key, required this.appointment});
@@ -12,6 +13,10 @@ class AppointmentsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+
+      },
+      leading: const Icon(Icons.calendar_today, color: AppColors.blue,),
       title: Text(appointment.client.target!.name),
       subtitle: FutureBuilder(
         future: Jiffy.setLocale("es"),
