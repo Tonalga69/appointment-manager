@@ -52,7 +52,7 @@ class EditAppointmentPage extends GetView<AppointmentsController> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                'Cliente: ${controller.selectedAppointment.value!.client.target!.name}',
+                'Cliente: ${controller.selectedAppointment.value!.client.target?.name?? 'Usuario eliminado'}',
                 style: const TextStyle(
                   color: AppColors.gunMetal,
                   fontSize: 16,
@@ -152,8 +152,7 @@ class EditAppointmentPage extends GetView<AppointmentsController> {
                             ),
                             onPressed: () {
                               controller.deleteSelectedAppointment();
-                              Get.back();
-                              Get.back();
+
                             },
                             child: const Text('Eliminar cita',
                                 style: TextStyle(

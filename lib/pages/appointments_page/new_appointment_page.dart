@@ -3,6 +3,7 @@ import 'package:appointments/utils/colors.dart';
 import 'package:appointments/utils/styles/input_form_styles.dart';
 import 'package:dropdown_model_list/drop_down/search_drop_list.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class NewAppointmentPage extends GetView<AppointmentsController> {
@@ -58,12 +59,11 @@ class NewAppointmentPage extends GetView<AppointmentsController> {
                 },
                 style: labelStyleGunMetal,
                 controller: controller.dateController,
+                readOnly: true,
                 decoration:  InputDecoration(
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      controller.selectDate(context);
-                    },
-                    icon: const Icon(Icons.calendar_today),
+                  suffixIcon: const Icon(
+                    FontAwesomeIcons.calendar,
+                    color: AppColors.blue,
                   ),
                   labelText: 'Fecha',
                   labelStyle: labelStyleGunMetal,
@@ -71,6 +71,9 @@ class NewAppointmentPage extends GetView<AppointmentsController> {
                   enabledBorder: outlineInputBorderGunMetal,
                   focusedBorder: outlineInputBorderGunMetal,
                 ),
+                onTap: () {
+                  controller.selectDate(context);
+                },
               ),
             ),
             const SizedBox(height: 20),

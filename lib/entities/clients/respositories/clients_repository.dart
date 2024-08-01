@@ -25,12 +25,11 @@ class ClientsRepository extends GetxController {
     return store.box<ClientModel>().getAllAsync();
   }
 
-  Future<bool> addClient(ClientModel client) async {
+  Future<ClientModel?> addClient(ClientModel client) async {
     try {
-      store.box<ClientModel>().put(client);
-      return true;
+      return store.box<ClientModel>().putAndGetAsync(client);
     } catch (e) {
-      return false;
+      return null;
     }
   }
 
@@ -45,5 +44,9 @@ class ClientsRepository extends GetxController {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<bool> deleteClient(int id) async {
+    return store.box<ClientModel>().remove(id);
   }
 }

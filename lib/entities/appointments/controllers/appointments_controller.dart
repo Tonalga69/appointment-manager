@@ -2,6 +2,7 @@ import 'package:appointments/entities/appointments/appointmentsModel.dart';
 import 'package:appointments/entities/appointments/repositories/appointment_repository.dart';
 import 'package:appointments/entities/clients/controllers/ClientsController.dart';
 import 'package:appointments/entities/clients/respositories/clients_repository.dart';
+import 'package:appointments/utils/routes.dart';
 import 'package:dropdown_model_list/drop_down/model.dart';
 import 'package:dropdown_model_list/dropdown_model_list.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class AppointmentsController extends GetxController {
   final appointments = <Appointmentsmodel>[].obs;
   final selectedAppointment = Rxn<Appointmentsmodel>(null);
 
-  AppointmentsController get to {
+  static AppointmentsController get to {
     try {
       return Get.find<AppointmentsController>();
     } catch (e) {
@@ -69,6 +70,7 @@ class AppointmentsController extends GetxController {
       appointment!.client.target = ClientsRepository.to
           .getClientById(int.parse(selectedClient.value.id!))!;
       AppointmentRepository.to.addAppointment(appointment!);
+      ClientsController.to.requestUpdateSelectedClient();
       appointments.add(appointment!);
       appointments.sort((a, b) => a.date.compareTo(b.date));
       clearFields();
@@ -122,6 +124,7 @@ class AppointmentsController extends GetxController {
       appointments.removeWhere((element) => element.id == selectedAppointment.value!.id);
       selectedAppointment.value = null;
       clearFields();
+      Get.offAllNamed(Routes.HOME);
       ClientsController.to.requestUpdateSelectedClient();
     } catch (e) {
       Get.snackbar('Error', 'No se pudo eliminar la cita');

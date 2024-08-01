@@ -21,7 +21,7 @@ class AppointmentsItem extends GetView<AppointmentsController> {
         Get.toNamed(Routes.editAppointment);
       },
       leading: const Icon(Icons.calendar_today, color: AppColors.blue,),
-      title: Text(appointment.client.target!.name),
+      title: Text(appointment.client.target?.name ?? 'Usuario eliminado'),
       subtitle: FutureBuilder(
         future: Jiffy.setLocale("es"),
         builder: (context, snapshot) {

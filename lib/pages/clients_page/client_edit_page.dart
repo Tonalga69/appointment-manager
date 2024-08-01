@@ -1,5 +1,6 @@
 import 'package:appointments/entities/clients/controllers/ClientsController.dart';
 import 'package:appointments/pages/clients_page/widgets/client_appointment_item.dart';
+import 'package:appointments/pages/clients_page/widgets/delete_client_dialog.dart';
 import 'package:appointments/pages/clients_page/widgets/edit_client_button_sheet.dart';
 import 'package:appointments/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,13 @@ class ClientEditPage extends GetView<ClientsController> {
               Get.bottomSheet(EditClientButtonSheet(
                   client: controller.selectedClient.value!));
             },
-          )
+          ),
+          IconButton(
+            icon: const Icon(FontAwesomeIcons.trash, color: AppColors.white),
+            onPressed: () {
+              Get.dialog(DeleteClientDialog(client: controller.selectedClient.value!));
+            },
+          ),
         ],
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColors.white),
@@ -42,7 +49,7 @@ class ClientEditPage extends GetView<ClientsController> {
                 children: [
                   const Padding(padding: EdgeInsets.all(8.0)),
                   Obx(() {
-                    return Text(controller.selectedClient.value!.name,
+                    return Text(controller.selectedClient.value?.name?? 'Usuario eliminado',
                         style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
