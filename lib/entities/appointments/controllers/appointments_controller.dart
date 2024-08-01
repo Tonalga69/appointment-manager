@@ -97,17 +97,23 @@ class AppointmentsController extends GetxController {
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
     ).then((value) {
+      if (value == null) {
+        return;
+      }
       dateController.text = value.toString().split(' ')[0];
-      appointment!.date = value!;
+      appointment!.date = value;
       showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
       ).then((value) {
+        if (value == null) {
+          return;
+        }
         appointment!.date = DateTime(
           appointment!.date.year,
           appointment!.date.month,
           appointment!.date.day,
-          value!.hour,
+          value.hour,
           value.minute,
         );
         Jiffy.setLocale("es").then((value){

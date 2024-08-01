@@ -12,7 +12,7 @@ class DeleteClientDialog extends GetView<ClientsController> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Eliminar cliente'),
-      content: Text('¿Estás seguro de que deseas eliminar a ${client.name}?'),
+      content: Text('¿Estás seguro de que deseas eliminar a ${client.name}?\nEsta acción también eliminará las citas asociadas.'),
       actions: [
         TextButton(
           onPressed: () {
