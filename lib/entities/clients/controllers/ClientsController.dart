@@ -47,6 +47,11 @@ class ClientsController extends GetxController {
     Get.snackbar('Exito', 'Cliente agregado correctamente');
   }
 
+  void requestUpdateSelectedClient(){
+    selectedClient.value = ClientsRepository.to.getClientById(selectedClient.value!.id);
+    clientsList[clientsList.indexWhere((element) => element.id == selectedClient.value!.id)] = selectedClient.value!;
+  }
+
   void updateClient(ClientModel client) async {
     final res = await ClientsRepository.to.updateClient(client);
     if (res == null) {

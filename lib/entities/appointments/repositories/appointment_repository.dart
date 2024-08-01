@@ -1,5 +1,6 @@
 import 'package:appointments/entities/appointments/appointmentsModel.dart';
 import 'package:appointments/entities/global_repositories/object_box_repository.dart';
+import 'package:appointments/objectbox.g.dart';
 import 'package:get/get.dart';
 
 class AppointmentRepository extends GetxController {
@@ -17,7 +18,19 @@ class AppointmentRepository extends GetxController {
 
   }
 
-  Future<List<Appointmentsmodel>> getAllAppointments() async {
-    return store.box<Appointmentsmodel>().getAll()..sort((a, b) => a.date.compareTo(b.date));
+  Future<List<Appointmentsmodel>> getAllAppointments({DateTime? initDate}) async {
+    if (initDate == null) {
+      return store.box<Appointmentsmodel>().getAll()..sort((a, b) => a.date.compareTo(b.date));
+    }
+    return store.box<Appointmentsmodel>().query(Appointmentsmodel_.date.greaterOrEqualDate(initDate)).build().find()..sort((a, b) => a.date.compareTo(b.date));
   }
+
+ Future<Appointmentsmodel> updateAppointment(Appointmentsmodel model) async {
+    final res = await store.box<Appointmentsmodel>().putAndGetAsync(model);
+    return res;
+  }
+
+  void deleteAppointment(Appointmentsmodel model) {
+    store.box<Appointmentsmodel>().remove(model.id);
+ }
 }

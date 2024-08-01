@@ -1,5 +1,6 @@
 import 'package:appointments/entities/appointments/appointmentsModel.dart';
 import 'package:appointments/entities/appointments/repositories/appointment_repository.dart';
+import 'package:appointments/entities/clients/controllers/ClientsController.dart';
 import 'package:appointments/entities/clients/respositories/clients_repository.dart';
 import 'package:dropdown_model_list/drop_down/model.dart';
 import 'package:dropdown_model_list/dropdown_model_list.dart';
@@ -31,7 +32,9 @@ class AppointmentsController extends GetxController {
   }
 
   Future<void> getAllAppointments() async {
-    appointments.value = await AppointmentRepository.to.getAllAppointments();
+    DateTime initDate = DateTime.now();
+    initDate= initDate.subtract( Duration(hours: initDate.hour, minutes: initDate.minute, seconds: initDate.second));
+    appointments.value = await AppointmentRepository.to.getAllAppointments(initDate: initDate);
   }
 
   void getAllClients() async {
@@ -40,8 +43,21 @@ class AppointmentsController extends GetxController {
         .toList());
   }
 
-  final dateController = TextEditingController();
+  void updateAppointment(Appointmentsmodel model) async {
+    try {
+      final res= await AppointmentRepository.to.updateAppointment(model);
+      appointments[appointments.indexWhere((element) => element.id == res.id)] = res;
+      selectedAppointment.value = res;
+      clearFields();
+      ClientsController.to.requestUpdateSelectedClient();
+    } catch (e) {
+      Get.snackbar('Error', 'No se pudo actualizar la cita');
+    }
+  }
 
+  final dateController = TextEditingController();
+  final treatmentController = TextEditingController();
+  final observationController = TextEditingController();
   final clientController = TextEditingController();
 
   void addAppointment() {
@@ -54,6 +70,7 @@ class AppointmentsController extends GetxController {
           .getClientById(int.parse(selectedClient.value.id!))!;
       AppointmentRepository.to.addAppointment(appointment!);
       appointments.add(appointment!);
+      appointments.sort((a, b) => a.date.compareTo(b.date));
       clearFields();
       Get.back();
     } catch (e) {
@@ -66,6 +83,8 @@ class AppointmentsController extends GetxController {
     dateController.clear();
     clientController.clear();
     selectedClient.value = OptionItem(title: 'Seleccione un cliente', id: '-1');
+    treatmentController.clear();
+    observationController.clear();
   }
 
   void selectDate(BuildContext context) {
@@ -95,5 +114,17 @@ class AppointmentsController extends GetxController {
 
       });
     });
+  }
+
+  void deleteSelectedAppointment() {
+    try {
+      AppointmentRepository.to.deleteAppointment(selectedAppointment.value!);
+      appointments.removeWhere((element) => element.id == selectedAppointment.value!.id);
+      selectedAppointment.value = null;
+      clearFields();
+      ClientsController.to.requestUpdateSelectedClient();
+    } catch (e) {
+      Get.snackbar('Error', 'No se pudo eliminar la cita');
+    }
   }
 }

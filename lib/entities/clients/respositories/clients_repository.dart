@@ -18,7 +18,7 @@ class ClientsRepository extends GetxController {
   }
 
   List<ClientModel> getClientByName(String query)  {
-    return store.box<ClientModel>().query(ClientModel_.name.contains(query)).build().find();
+    return store.box<ClientModel>().query(ClientModel_.name.contains(caseSensitive: false, query)).build().find();
   }
 
   Future<List<ClientModel>> getAllClients() async {
