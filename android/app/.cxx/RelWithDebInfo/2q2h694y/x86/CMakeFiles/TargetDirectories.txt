@@ -1,0 +1,2 @@
+C:/Users/52331/Documents/GitHub/appointment-manager/android/app/.cxx/RelWithDebInfo/2q2h694y/x86/CMakeFiles/edit_cache.dir
+C:/Users/52331/Documents/GitHub/appointment-manager/android/app/.cxx/RelWithDebInfo/2q2h694y/x86/CMakeFiles/rebuild_cache.dir

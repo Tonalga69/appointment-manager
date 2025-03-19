@@ -30,7 +30,7 @@ class ClientsController extends GetxController {
 
   void getAllClients({String? name}) async {
     if (name != null) {
-      clientsList.value = ClientsRepository.to.getClientByName(name);
+      clientsList.value = ClientsRepository.to.getClientByName(name.trim());
       return;
     }
     clientsList.value = await ClientsRepository.to.getAllClients();

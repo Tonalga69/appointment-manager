@@ -1,13 +1,11 @@
-
 import 'package:appointments/entities/clients/Model.dart';
 import 'package:appointments/entities/global_repositories/object_box_repository.dart';
 import 'package:get/get.dart';
 
 import '../../../objectbox.g.dart';
 
-
 class ClientsRepository extends GetxController {
-   final store = ObjectBoxRepository.to.store;
+  final store = ObjectBoxRepository.to.store;
 
   static ClientsRepository get to {
     try {
@@ -17,8 +15,12 @@ class ClientsRepository extends GetxController {
     }
   }
 
-  List<ClientModel> getClientByName(String query)  {
-    return store.box<ClientModel>().query(ClientModel_.name.contains(caseSensitive: false, query)).build().find();
+  List<ClientModel> getClientByName(String query) {
+    return store
+        .box<ClientModel>()
+        .query(ClientModel_.name.contains(caseSensitive: false, query))
+        .build()
+        .find();
   }
 
   Future<List<ClientModel>> getAllClients() async {
@@ -38,9 +40,11 @@ class ClientsRepository extends GetxController {
     return store.box<ClientModel>().get(parse);
   }
 
-  Future<ClientModel?> updateClient(ClientModel client) async  {
+  Future<ClientModel?> updateClient(ClientModel client) async {
     try {
-      final res =await store.box<ClientModel>().putAndGetAsync(client, mode: PutMode.put);
+      final res = await store
+          .box<ClientModel>()
+          .putAndGetAsync(client, mode: PutMode.put);
       return res;
     } catch (e) {
       return null;
